@@ -2,7 +2,7 @@
 Contributors: Asgaros, qualmy91
 Donate link: https://asgaros.com/donate/
 Tags: forum, forums, discussion, community, asgaros
-Requires at least: 4.9
+Requires at least: 6.4
 Tested up to: 6.9
 Requires PHP: 5.3
 Stable tag: 3.3.0
@@ -89,6 +89,7 @@ Please report security bugs found in the source code of the Asgaros Forum plugin
 * Added: Missing notices in administration area when changing configurations
 * Changed: Switched to native WordPress admin notice functions
 * Compatibility with WordPress 6.9
+* The required minimum WordPress version is now 6.4
 = 3.3.0 =
 * Fixed: Cross Site Scripting vulnerability within the spoiler title
 * Fixed: Cross-Site Request Forgery in subscription settings
