@@ -86,6 +86,8 @@ Please report security bugs found in the source code of the Asgaros Forum plugin
 6. Manage general options
 
 == Changelog ==
+* Added: Missing notices in administration area when changing configurations
+* Changed: Switched to native WordPress admin notice functions
 * Compatibility with WordPress 6.9
 = 3.3.0 =
 * Fixed: Cross Site Scripting vulnerability within the spoiler title

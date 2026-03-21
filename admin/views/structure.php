@@ -7,8 +7,7 @@ if (!defined('ABSPATH')) {
 <div class="wrap" id="af-structure">
     <?php
     $title        = __('Structure', 'asgaros-forum');
-    $titleUpdated = __('Structure updated.', 'asgaros-forum');
-    $this->render_admin_header($title, $titleUpdated);
+    $this->render_admin_header($title);
 
     $categories = $this->asgarosforum->content->get_categories(false);
     ?>

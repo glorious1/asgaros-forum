@@ -7,8 +7,7 @@ if (!defined('ABSPATH')) {
 <div class="wrap" id="af-structure">
     <?php
     $title        = __('Usergroups', 'asgaros-forum');
-    $titleUpdated = __('Usergroups updated.', 'asgaros-forum');
-    $this->render_admin_header($title, $titleUpdated);
+    $this->render_admin_header($title);
     ?>
 
     <div id="editor-container" class="settings-box" style="display: none;">

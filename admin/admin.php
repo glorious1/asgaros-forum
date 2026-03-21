@@ -19,6 +19,7 @@ class AsgarosForumAdmin {
         add_action('wp_loaded', array($this, 'save_settings'));
         add_action('admin_menu', array($this, 'add_admin_pages'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+        add_action('admin_notices', array($this, 'handle_admin_notices'));
 
         // User profile options.
         add_action('edit_user_profile', array($this, 'user_profile_fields'));
@@ -321,7 +322,7 @@ class AsgarosForumAdmin {
                 if (is_wp_error($saveStatus)) {
                     $this->error = $saveStatus->get_error_message();
                 } else {
-                    $this->saved = $saveStatus;
+                    $this->saved = __('Usergroups updated.', 'asgaros-forum');
                 }
             } else if (isset($_POST['af-create-edit-usergroup-submit'])) {
                 // Verify nonce first.
@@ -332,7 +333,7 @@ class AsgarosForumAdmin {
                 if (is_wp_error($saveStatus)) {
                     $this->error = $saveStatus->get_error_message();
                 } else {
-                    $this->saved = $saveStatus;
+                    $this->saved = __('Usergroups updated.', 'asgaros-forum');
                 }
             } else if (isset($_POST['asgaros-forum-delete-usergroup'])) {
                 // Verify nonce first.
@@ -340,6 +341,7 @@ class AsgarosForumAdmin {
 
                 if (!empty($_POST['usergroup-id']) && is_numeric($_POST['usergroup-id'])) {
                     AsgarosForumUserGroups::deleteUserGroup(sanitize_key($_POST['usergroup-id']));
+                    $this->saved = __('Usergroups updated.', 'asgaros-forum');
                 }
             } else if (isset($_POST['asgaros-forum-delete-usergroup-category'])) {
                 // Verify nonce first.
@@ -347,6 +349,7 @@ class AsgarosForumAdmin {
 
                 if (!empty($_POST['usergroup-category-id']) && is_numeric($_POST['usergroup-category-id'])) {
                     AsgarosForumUserGroups::deleteUserGroupCategory(sanitize_key($_POST['usergroup-category-id']));
+                    $this->saved = __('Usergroups updated.', 'asgaros-forum');
                 }
             }
         }
@@ -386,7 +389,7 @@ class AsgarosForumAdmin {
         }
 
         $this->asgarosforum->save_options($saved_ops);
-        $this->saved = true;
+        $this->saved = __('Settings updated.', 'asgaros-forum');
     }
 
     public function maybeFilterAllowedFileExtensions($allowedFileExtensions, $previousAllowedFileExtensions) {
@@ -440,7 +443,7 @@ class AsgarosForumAdmin {
         }
 
         $this->asgarosforum->appearance->save_options($saved_ops);
-        $this->saved = true;
+        $this->saved = __('Appearance updated.', 'asgaros-forum');
     }
 
     /* STRUCTURE */
@@ -469,7 +472,7 @@ class AsgarosForumAdmin {
             update_term_meta($category_id, 'order', $category_order);
             AsgarosForumUserGroups::saveUserGroupsOfForumCategory($category_id);
 
-            $this->saved = true;
+            $this->saved = __('Structure updated.', 'asgaros-forum');
         }
     }
 
@@ -534,7 +537,7 @@ class AsgarosForumAdmin {
                 }
             }
 
-            $this->saved = true;
+            $this->saved = __('Structure updated.', 'asgaros-forum');
         }
     }
 
@@ -548,6 +551,8 @@ class AsgarosForumAdmin {
         }
 
         wp_delete_term($categoryID, 'asgarosforum-category');
+
+        $this->saved = __('Structure updated.', 'asgaros-forum');
     }
 
     public function delete_forum($forum_id, $category_id) {
@@ -575,11 +580,30 @@ class AsgarosForumAdmin {
         // Last but not least delete the forum
         $this->asgarosforum->db->delete($this->asgarosforum->tables->forums, array('id' => $forum_id), array('%d'));
 
-        $this->saved = true;
+        $this->saved = __('Structure updated.', 'asgaros-forum');
     }
 
-    /* USERGROUPS */
-    public function render_admin_header($title, $titleUpdated) {
+    public function handle_admin_notices() {
+        if ($this->error) {
+            wp_admin_notice(
+                esc_html($this->error),
+                array(
+                    'type'          => 'error',
+                    'dismissible'   => true,
+                ),
+            );
+        } else if ($this->saved) {
+            wp_admin_notice(
+                esc_html($this->saved),
+                array(
+                    'type'          => 'success',
+                    'dismissible'   => true,
+                ),
+            );
+        }
+    }
+    
+    public function render_admin_header($title) {
         // Workaround to ensure that admin-notices are shown outside of our panel.
         echo '<h1 id="asgaros-panel-notice-area"></h1>';
 
@@ -609,13 +633,6 @@ class AsgarosForumAdmin {
                 echo '</div>';
                 echo '<div class="clear"></div>';
             echo '</div>';
-
-            if ($this->error) {
-                echo '<div class="error-panel"><p>'.esc_html($this->error).'</p></div>';
-            } else if ($this->saved) {
-                echo '<div class="updated-panel"><p>'.esc_html($titleUpdated).'</p></div>';
-            }
-
         echo '</div>';
     }
 
