@@ -3,7 +3,7 @@ Contributors: Asgaros, qualmy91
 Donate link: https://asgaros.com/donate/
 Tags: forum, forums, discussion, community, asgaros
 Requires at least: 4.9
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 5.3
 Stable tag: 3.3.0
 License: GPLv2 or later
@@ -86,6 +86,7 @@ Please report security bugs found in the source code of the Asgaros Forum plugin
 6. Manage general options
 
 == Changelog ==
+* Compatibility with WordPress 6.9
 = 3.3.0 =
 * Fixed: Cross Site Scripting vulnerability within the spoiler title
 * Fixed: Cross-Site Request Forgery in subscription settings
