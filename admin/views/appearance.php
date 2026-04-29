@@ -8,8 +8,7 @@ if (!defined('ABSPATH')) {
 <div class="wrap" id="af-options">
     <?php
     $title        = __('Appearance', 'asgaros-forum');
-    $titleUpdated = __('Appearance updated.', 'asgaros-forum');
-    $this->render_admin_header($title, $titleUpdated);
+    $this->render_admin_header($title);
     ?>
 
     <form method="post">

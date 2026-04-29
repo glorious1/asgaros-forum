@@ -189,19 +189,6 @@ li.forum-user-group {
     padding-left: 16px;
     font-size: 28px;
 }
-#asgaros-panel .error-panel {
-    border-left: 4px solid #dc3232;
-}
-#asgaros-panel .updated-panel {
-    border-left: 4px solid #46b450;
-}
-#asgaros-panel .error-panel p,
-#asgaros-panel .updated-panel p {
-    border: 1px solid #f1f1f1;
-    padding: 8px;
-    margin: 8px 0 0;
-    background-color: #fafafa;
-}
 #af-options table,
 #af-structure #editor-container table {
     width: 100%;
